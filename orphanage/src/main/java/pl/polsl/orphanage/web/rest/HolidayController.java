@@ -39,12 +39,12 @@ public class HolidayController {
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
     @PostMapping("/holidays")
-    public ResponseEntity<HolidayDTO> createEmployee(@RequestBody HolidayDTO holidayDTO) throws URISyntaxException {
+    public ResponseEntity<HolidayDTO> createHoliday(@RequestBody HolidayDTO holidayDTO) throws URISyntaxException {
 
         Holiday holiday = holidayMapper.toEntity(holidayDTO);
         holiday = holidayRepository.save(holiday);
         HolidayDTO result = holidayMapper.toDto(holiday);
-        return ResponseEntity.created(new URI("/api/employees/" + result.getId()))
+        return ResponseEntity.created(new URI("/api/holidays/" + result.getId()))
                 .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
                 .body(result);
     }
@@ -59,9 +59,9 @@ public class HolidayController {
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
     @PutMapping("/holidays")
-    public ResponseEntity<HolidayDTO> updateEmployee(@RequestBody HolidayDTO holidayDTO) throws URISyntaxException {
+    public ResponseEntity<HolidayDTO> updateHoliday(@RequestBody HolidayDTO holidayDTO) throws URISyntaxException {
         if (holidayDTO.getId() == null) {
-            return createEmployee(holidayDTO);
+            return createHoliday(holidayDTO);
         }
         Holiday holiday = holidayMapper.toEntity(holidayDTO);
         holiday = holidayRepository.save(holiday);
@@ -72,17 +72,17 @@ public class HolidayController {
     }
 
     /**
-     * GET  /holidays/:fosterlingId : get all the employees.
+     * GET  /holidays/:fosterlingId : get all the holidays.
      *
      * @param fosterlingId the id of the fosterling parent
-     * @return the ResponseEntity with status 200 (OK) and the list of employees in body
+     * @return the ResponseEntity with status 200 (OK) and the list of holidays in body
      */
     @GetMapping("/holidays/{fosterlingId}")
-    public ResponseEntity<List<HolidayDTO>> getAllEmployees(@PathVariable Long fosterlingId) {
+    public ResponseEntity<List<HolidayDTO>> getAllHoliday(@PathVariable Long fosterlingId) {
         List<Holiday> list = holidayRepository.findByFosterlingId(fosterlingId);
         return new ResponseEntity<>(holidayMapper.toDto(list), HttpStatus.OK);
     }
-
+    
     /**
      * DELETE  /holidays/:id : delete the "id" holiday.
      *
@@ -90,7 +90,7 @@ public class HolidayController {
      * @return the ResponseEntity with status 200 (OK)
      */
     @DeleteMapping("/holidays/{id}")
-    public ResponseEntity<Void> deleteEmployee(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteHoliday(@PathVariable Long id) {
         holidayRepository.deleteById(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
     }

@@ -9,6 +9,7 @@ import pl.polsl.orphanage.service.mapper.FosterlingMapper;
 
 
 import java.util.Date;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -69,6 +70,17 @@ public class FosterlingService {
     }
 
     /**
+     * Get fosterling by entity`s id.
+     *
+     * @param id the id of fosterling id
+     * @return the entity
+     */
+    public FosterlingDTO findById(Long id){
+        return fosterlingMapper.toDto(fosterlingRepository.findOneById(id));
+
+    }
+
+    /**
      * Search fosterling by lastname
      *
      * @param lastname the prop of fosterling entity
@@ -76,7 +88,7 @@ public class FosterlingService {
      */
     public List<FosterlingDTO> findFosterlingByName(String lastname){
         return fosterlingRepository
-                .findAllByLastnameIgnoreCaseContaining(lastname).stream()
+                .findAllByLastnameIgnoreCaseContaining("%" + lastname + "%").stream()
                 .map(fosterlingMapper::toDto)
                 .collect(Collectors.toCollection(LinkedList::new));
     }
@@ -144,6 +156,17 @@ public class FosterlingService {
      * @param id the id of the entity
      */
     public void delete(Long id){
+
+        Fosterling fosterling = fosterlingRepository.findOneById(id);
+
+        fosterling
+                .setRelatives(new HashSet<>());
+
+        fosterling
+                .setSibilings(new HashSet<>());
+
+        fosterlingRepository.save(fosterling);
+
         fosterlingRepository.deleteById(id);
     }
 }

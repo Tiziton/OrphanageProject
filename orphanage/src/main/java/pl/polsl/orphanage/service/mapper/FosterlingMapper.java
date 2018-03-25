@@ -14,7 +14,7 @@ public interface FosterlingMapper extends EntityMapper<FosterlingDTO,Fosterling>
     @Mapping(source="caretaker.id", target = "caretakerId")
     FosterlingDTO toDto(Fosterling fosterling);
 
-    @Mapping(source = "caretakerId", target = "caretaker.id")
+    @Mapping(source = "caretakerId", target = "caretaker")
     @Mapping(target = "sibilings", ignore = true)
     @Mapping(target = "holidays", ignore = true)
     @Mapping(target = "documents", ignore = true)

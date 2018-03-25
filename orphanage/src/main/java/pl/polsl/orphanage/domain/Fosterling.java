@@ -36,17 +36,14 @@ public class Fosterling implements Serializable {
     @JoinTable(name = "Relationship", joinColumns = {
             @JoinColumn(name = "Fosterling_Id", referencedColumnName = "Id")}, inverseJoinColumns = {
             @JoinColumn(name = "Relative_id", referencedColumnName = "Id")})
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.EAGER)
     private Set<Relative> relatives;
 
     @JoinTable(name = "Sibilings", joinColumns = {
             @JoinColumn(name = "Fosterling_Id", referencedColumnName = "Id")}, inverseJoinColumns = {
             @JoinColumn(name = "Sibiling_id", referencedColumnName = "Id")})
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.EAGER)
     private Set<Fosterling> sibilings;
-
-    /*@ManyToMany(mappedBy = "fosterlingCollection", fetch = FetchType.LAZY)
-    private Set<FosterlingRepository> fosterlingCollection1;*/
 
     @JoinColumn(name = "Caretaker_Id", referencedColumnName = "Id")
     @ManyToOne(fetch = FetchType.LAZY)

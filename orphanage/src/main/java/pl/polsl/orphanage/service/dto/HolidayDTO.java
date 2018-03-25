@@ -39,11 +39,11 @@ public class HolidayDTO {
         this.endDate = endDate;
     }
 
-    public Boolean getReturned() {
+    public Boolean getIsReturned() {
         return isReturned;
     }
 
-    public void setReturned(Boolean returned) {
+    public void setIsReturned(Boolean returned) {
         isReturned = returned;
     }
 
@@ -89,7 +89,7 @@ public class HolidayDTO {
                 "id=" + getId() +
                 ", startDate='" + getStartDate() + "'" +
                 ", endDate='" + getEndDate() + "'" +
-                ", isReturned='" + getReturned() + "'" +
+                ", isReturned='" + getIsReturned() + "'" +
                 ", notes='" + getNotes() + "'" +
                 ", fosterlingId='" + getFosterlingId() + "'" +
                 "}";

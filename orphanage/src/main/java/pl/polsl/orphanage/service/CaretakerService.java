@@ -1,5 +1,6 @@
 package pl.polsl.orphanage.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pl.polsl.orphanage.domain.Caretaker;
@@ -60,7 +61,7 @@ public class CaretakerService {
      * @return the entity
      */
     public CaretakerDTO findCaretakerByUserId(Long userId){
-        return caretakerMapper.toDto(caretakerRepository.findByUserId(userId));
+        return caretakerMapper.toDto(caretakerRepository.findOneByUserId(userId));
     }
 
     /**

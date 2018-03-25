@@ -12,7 +12,7 @@ public class Reward implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", updatable = false, nullable = false)
     private Long id;
 
@@ -27,7 +27,7 @@ public class Reward implements Serializable {
     @Column(name = "Notes")
     private String notes;
 
-    @JoinColumn(name = "Fosterling_id", referencedColumnName = "Id", insertable = false, updatable = false)
+    @JoinColumn(name = "Fosterling_id", referencedColumnName = "Id")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Fosterling fosterling;
 

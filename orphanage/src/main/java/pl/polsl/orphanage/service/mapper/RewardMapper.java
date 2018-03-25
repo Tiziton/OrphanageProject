@@ -14,7 +14,7 @@ public interface RewardMapper extends EntityMapper<RewardDTO,Reward>{
     @Mapping(source="fosterling.id", target = "fosterlingId")
     RewardDTO toDto(Reward reward);
 
-    @Mapping(source = "fosterlingId", target = "fosterling.id")
+    @Mapping(source = "fosterlingId", target = "fosterling")
     Reward toEntity(RewardDTO rewardDTO);
 
     default Reward fromId(Long id) {

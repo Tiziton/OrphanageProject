@@ -16,6 +16,8 @@ import java.util.List;
 /**
  * REST controller for managing Reward.
  */
+@RestController
+@RequestMapping("/api")
 public class RewardController {
 
     private static final String ENTITY_NAME = "Reward";
@@ -37,7 +39,7 @@ public class RewardController {
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
     @PostMapping("/rewards")
-    public ResponseEntity<RewardDTO> createEmployee(@RequestBody RewardDTO rewardDTO) throws URISyntaxException {
+    public ResponseEntity<RewardDTO> createReward(@RequestBody RewardDTO rewardDTO) throws URISyntaxException {
 
         Reward reward = rewardMapper.toEntity(rewardDTO);
         reward = rewardRepository.save(reward);
@@ -57,9 +59,9 @@ public class RewardController {
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
     @PutMapping("/rewards")
-    public ResponseEntity<RewardDTO> updateEmployee(@RequestBody RewardDTO rewardDTO) throws URISyntaxException {
+    public ResponseEntity<RewardDTO> updateReward(@RequestBody RewardDTO rewardDTO) throws URISyntaxException {
         if (rewardDTO.getId() == null) {
-            return createEmployee(rewardDTO);
+            return createReward(rewardDTO);
         }
         Reward reward = rewardMapper.toEntity(rewardDTO);
         reward = rewardRepository.save(reward);
@@ -88,7 +90,7 @@ public class RewardController {
      * @return the ResponseEntity with status 200 (OK)
      */
     @DeleteMapping("/rewards/{id}")
-    public ResponseEntity<Void> deleteEmployee(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteReward(@PathVariable Long id) {
         rewardRepository.deleteById(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
     }

@@ -3,6 +3,7 @@ package pl.polsl.orphanage.repository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Repository;
 import pl.polsl.orphanage.domain.Fosterling;
 
@@ -20,7 +21,9 @@ public interface FosterlingRepository extends CrudRepository<Fosterling, Long> {
     @Query("SELECT fosterling FROM Fosterling fosterling WHERE fosterling.caretaker.id = :caretakerId")
     List<Fosterling> findAllByCaretaker(@Param("caretakerId") Long caretakerId);
 
-    List<Fosterling> findAllByLastnameIgnoreCaseContaining(String lastname);
+    @Query("SELECT fosterling FROM Fosterling fosterling WHERE lower(fosterling.lastname) " +
+            "like lower(:lastname)")
+    List<Fosterling> findAllByLastnameIgnoreCaseContaining(@Param("lastname") String lastname);
 
     @Query("SELECT fosterling FROM Fosterling fosterling " +
             "WHERE fosterling.dateBirth BETWEEN :fromDate and :toDate")
@@ -31,4 +34,9 @@ public interface FosterlingRepository extends CrudRepository<Fosterling, Long> {
     List<Fosterling> findAllSibilings(@Param("fosterlingId") Long fosterlingId);
 
     Fosterling findOneById(Long id);
+
+    @Query("SELECT fosterling FROM Fosterling fosterling " +
+            "JOIN FETCH fosterling.relatives relative " +
+            "WHERE relative.id = :relativeId")
+    List<Fosterling> findAllWithRelative(@Param("relativeId") Long relativeId);
 }

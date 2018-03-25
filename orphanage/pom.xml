@@ -5,7 +5,7 @@
 
 	<groupId>pl.polsl</groupId>
 	<artifactId>orphanage</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.1-SNAPSHOT</version>
 	<packaging>war</packaging>
 
 	<name>orphanage</name>
@@ -97,11 +97,11 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 				<!-- Uncomment when you want to debug-->
-				<configuration>
+				<!--configuration>
 					<jvmArguments>
 						-Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=5005
 					</jvmArguments>
-				</configuration>
+				</configuration-->
 				<executions>
 					<execution>
 						<goals>

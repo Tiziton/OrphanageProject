@@ -32,7 +32,7 @@ public class Relative implements Serializable {
     @Column(name = "TypeRelation")
     private String typeRelation;
 
-    @ManyToMany(mappedBy = "relatives", fetch = FetchType.LAZY)
+    @ManyToMany(mappedBy = "relatives", fetch = FetchType.EAGER)
     private Set<Fosterling> fosterlings;
 
     public Relative() { }

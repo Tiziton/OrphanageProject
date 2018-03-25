@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.*;
 import pl.polsl.orphanage.service.FosterlingService;
 import pl.polsl.orphanage.service.dto.FosterlingDTO;
 import pl.polsl.orphanage.web.rest.errors.BadRequestAlertException;
+import pl.polsl.orphanage.web.rest.requestbody.SibilingRequestBody;
 import pl.polsl.orphanage.web.rest.util.HeaderUtil;
 
 import java.net.URI;
@@ -90,11 +91,21 @@ public class FosterlingController {
     }
 
     /**
-     * GET  /fosterling : get fosterlings by caretaker id.
+     * GET  /fosterling/:id : get fosterlings by  id.
+     *
+     * @return the ResponseEntity with status 200 (OK) and entity fosterling in body
+     */
+    @GetMapping("/fosterling/{id}")
+    public FosterlingDTO getFosterlingById(@PathVariable Long id) {
+        return fosterlingService.findById(id);
+    }
+
+    /**
+     * GET  /fosterling/caretaker/:id : get fosterlings by caretaker id.
      *
      * @return the ResponseEntity with status 200 (OK) and the list of fosterling in body
      */
-    @GetMapping("/fosterling/{id}")
+    @GetMapping("/fosterling/caretaker/{id}")
     public List<FosterlingDTO> getAllFosterlingByCaretaker(@PathVariable Long id) {
         return fosterlingService.findByCaretaker(id);
     }
@@ -114,25 +125,26 @@ public class FosterlingController {
     /**
      * POST /sibiling/add : add sibiling to fosterling
      *
-     * @param id the id of fosterling entity
-     * @param sibilingId the id of fosterling`s sibiling
+     * @param bodyRequest the body request
      */
     @PostMapping("/sibiling/add")
-    public ResponseEntity<Void> addSibiling(@RequestBody Long id, @RequestBody Long sibilingId){
-        fosterlingService.addFosterlingSibiling(id, sibilingId);
-        return  ResponseEntity.ok().headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, id.toString())).build();
+    public ResponseEntity<Void> addSibiling(@RequestBody SibilingRequestBody bodyRequest){
+        fosterlingService.addFosterlingSibiling(bodyRequest.getId(), bodyRequest.getSibilingId());
+        return  ResponseEntity.ok().headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME,
+                bodyRequest.getId().toString())).build();
     }
 
     /**
      * POST /sibiling/delete : delete sibiling from fosterling
      *
-     * @param id the id of fosterling entity
-     * @param sibilingId the id of fosterling`s sibiling
+     * @param bodyRequest the body request
      */
     @PostMapping("/sibiling/delete")
-    public ResponseEntity<Void> deleteSibiling(@RequestBody Long id, @RequestBody Long sibilingId){
-        fosterlingService.deleteFosterlingSibiling(id, sibilingId);
-        return  ResponseEntity.ok().headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, id.toString())).build();
+    public ResponseEntity<Void> deleteSibiling(@RequestBody SibilingRequestBody bodyRequest){
+        fosterlingService.deleteFosterlingSibiling(bodyRequest.getId(), bodyRequest.getSibilingId());
+        return  ResponseEntity.ok().headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME,
+                bodyRequest.getId().toString())).build();
     }
+
 
 }

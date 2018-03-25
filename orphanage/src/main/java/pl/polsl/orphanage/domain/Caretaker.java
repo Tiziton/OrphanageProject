@@ -13,8 +13,8 @@ public class Caretaker implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id", updatable = false, nullable = false, unique = true)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", updatable = false, nullable = false)
     private Long id;
 
     @Basic(optional = false)
@@ -25,7 +25,7 @@ public class Caretaker implements Serializable {
     @Column(name = "Lastname")
     private String lastname;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "User_Id", nullable = false, unique = true)
     private User user;
 
@@ -73,7 +73,7 @@ public class Caretaker implements Serializable {
         return user;
     }
 
-    public void setUser(User userId) {
+    public void setUser(User user) {
         this.user = user;
     }
 

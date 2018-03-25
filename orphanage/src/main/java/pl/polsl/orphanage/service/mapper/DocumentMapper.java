@@ -14,7 +14,7 @@ public interface DocumentMapper extends EntityMapper<DocumentDTO,Document>{
     @Mapping(source="fosterling.id", target = "fosterlingId")
     DocumentDTO toDto(Document document);
 
-    @Mapping(source = "fosterlingId", target = "fosterling.id")
+    @Mapping(source = "fosterlingId", target = "fosterling")
     Document toEntity(DocumentDTO documentDTO);
 
     default Document fromId(Long id) {

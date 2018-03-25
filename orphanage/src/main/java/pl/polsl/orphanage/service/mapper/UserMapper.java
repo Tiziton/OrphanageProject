@@ -4,6 +4,8 @@ import org.springframework.stereotype.Service;
 import pl.polsl.orphanage.domain.Authority;
 import pl.polsl.orphanage.domain.User;
 import pl.polsl.orphanage.service.dto.UserDTO;
+import pl.polsl.orphanage.service.mapper.annotations.IdToObject;
+import pl.polsl.orphanage.service.mapper.annotations.UserTranslator;
 
 import java.util.List;
 import java.util.Objects;
@@ -14,6 +16,7 @@ import java.util.stream.Collectors;
  * Mapper for the entity User and its DTO UserDTO.
  */
 @Service
+@UserTranslator
 public class UserMapper {
 
     public UserDTO userToUserDTO(User user) {
@@ -49,6 +52,7 @@ public class UserMapper {
                 .collect(Collectors.toList());
     }
 
+    @IdToObject
     public User userFromId(Long id) {
         if (id == null) {
             return null;

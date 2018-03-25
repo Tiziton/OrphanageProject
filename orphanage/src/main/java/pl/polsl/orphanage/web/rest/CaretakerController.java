@@ -71,7 +71,7 @@ public class CaretakerController {
      * @return the ResponseEntity with status 200 (OK) and the list of caretaker in body
      */
     @GetMapping("/caretaker/{id}")
-    public CaretakerDTO getAllCaretakerByUser(@PathVariable Long id) {
+    public CaretakerDTO getCaretakerByUser(@PathVariable Long id) {
         return caretakerService.findCaretakerByUserId(id);
     }
 

@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.*;
 import pl.polsl.orphanage.service.RelativeService;
 import pl.polsl.orphanage.service.dto.RelativeDTO;
 import pl.polsl.orphanage.web.rest.errors.BadRequestAlertException;
+import pl.polsl.orphanage.web.rest.requestbody.RelativeRequestBody;
 import pl.polsl.orphanage.web.rest.util.HeaderUtil;
 
 import java.net.URI;
@@ -64,13 +65,14 @@ public class RelativeController {
                 .body(result);
     }
 
+
     /**
      * GET  /relative/:id : get relatives by fosterling`s id.
      *
      * @return the ResponseEntity with status 200 (OK) and the list of relative in body
      */
     @GetMapping("/relative/{id}")
-    public List<RelativeDTO> getAllFosterlingByCaretaker(@RequestParam Long id) {
+    public List<RelativeDTO> getAllFosterling(@RequestParam Long id) {
         return relativeService.findAllByFosterling(id);
     }
 
@@ -80,7 +82,45 @@ public class RelativeController {
      * @return the ResponseEntity with status 200 (OK) and the list of relative in body
      */
     @GetMapping("/search/relative/{lastname}")
-    public List<RelativeDTO> getAllFosterlingByCaretaker(@RequestParam String lastname) {
+    public List<RelativeDTO> searchRelativeByLastname(@RequestParam String lastname) {
         return relativeService.findAllByLastname(lastname);
+    }
+
+    /**
+     * POST: /relative/fosterling/add : add a relative to fosterling entity
+     *
+     * @param requestBody the id of relative and fosterling entity
+     * @return ResponseEntity with status 200
+     */
+    @PostMapping("/relative/fosterling/add")
+    public ResponseEntity<Void> addRelativeFosterling(@RequestBody RelativeRequestBody requestBody){
+        if (relativeService.addRelativeToFosterling(requestBody.getId(), requestBody.getSibilingId())) {
+            return ResponseEntity.ok()
+                    .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, requestBody.getId().toString()))
+                    .build();
+        } else {
+            return ResponseEntity.badRequest()
+                    .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, requestBody.getId().toString()))
+                    .build();
+        }
+    }
+
+    /**
+     * DELETE  /relative/:id : delete the "id" holiday.
+     *
+     * @param id the id of the relativeDTO to delete
+     * @return the ResponseEntity with status 200 (OK)
+     */
+    @DeleteMapping("/relative/{id}")
+    public ResponseEntity<Void> deleteRelative(@PathVariable Long id) {
+        if(relativeService.delete(id)){
+        return ResponseEntity.ok()
+                .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, id.toString()))
+                .build();
+        } else {
+            return ResponseEntity.badRequest()
+                    .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, id.toString()))
+                    .build();
+        }
     }
 }

@@ -39,12 +39,12 @@ public class DocumentController {
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
     @PostMapping("/documents")
-    public ResponseEntity<DocumentDTO> createEmployee(@RequestBody DocumentDTO documentDTO) throws URISyntaxException {
+    public ResponseEntity<DocumentDTO> createDocument(@RequestBody DocumentDTO documentDTO) throws URISyntaxException {
 
         Document document = documentMapper.toEntity(documentDTO);
         document = documentRepository.save(document);
         DocumentDTO result = documentMapper.toDto(document);
-        return ResponseEntity.created(new URI("/api/employees/" + result.getId()))
+        return ResponseEntity.created(new URI("/api/documents/" + result.getId()))
                 .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
                 .body(result);
     }
@@ -59,26 +59,26 @@ public class DocumentController {
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
     @PutMapping("/documents")
-    public ResponseEntity<DocumentDTO> updateEmployee(@RequestBody DocumentDTO documentDTO) throws URISyntaxException {
+    public ResponseEntity<DocumentDTO> updateDocument(@RequestBody DocumentDTO documentDTO) throws URISyntaxException {
         if (documentDTO.getId() == null) {
-            return createEmployee(documentDTO);
+            return createDocument(documentDTO);
         }
-        Document employee = documentMapper.toEntity(documentDTO);
-        employee = documentRepository.save(employee);
-        DocumentDTO result = documentMapper.toDto(employee);
+        Document document = documentMapper.toEntity(documentDTO);
+        document = documentRepository.save(document);
+        DocumentDTO result = documentMapper.toDto(document);
         return ResponseEntity.ok()
                 .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, documentDTO.getId().toString()))
                 .body(result);
     }
 
     /**
-     * GET  /employees/:fosterlingId : get all the employees.
+     * GET  /documents/:fosterlingId : get all the documents.
      *
      * @param fosterlingId the id of the fosterling parent
-     * @return the ResponseEntity with status 200 (OK) and the list of employees in body
+     * @return the ResponseEntity with status 200 (OK) and the list of documents in body
      */
     @GetMapping("/documents/{fosterlingId}")
-    public ResponseEntity<List<DocumentDTO>> getAllEmployees(@PathVariable Long fosterlingId) {
+    public ResponseEntity<List<DocumentDTO>> getAllDocuments(@PathVariable Long fosterlingId) {
         List<Document> page = documentRepository.findByFosterlingId(fosterlingId);
         return new ResponseEntity<>(documentMapper.toDto(page),HttpStatus.OK);
     }
@@ -90,7 +90,7 @@ public class DocumentController {
      * @return the ResponseEntity with status 200 (OK)
      */
     @DeleteMapping("/documents/{id}")
-    public ResponseEntity<Void> deleteEmployee(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteDocument(@PathVariable Long id) {
         documentRepository.deleteById(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
     }

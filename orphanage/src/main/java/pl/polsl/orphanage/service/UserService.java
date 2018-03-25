@@ -61,8 +61,8 @@ public class UserService {
                     .collect(Collectors.toSet());
             newUser.setAuthorities(authorities);
         }
-
-        return userMapper.userToUserDTO(userRepository.save(newUser));
+        User user =  userRepository.save(newUser);
+        return userMapper.userToUserDTO(user);
 
     }
 

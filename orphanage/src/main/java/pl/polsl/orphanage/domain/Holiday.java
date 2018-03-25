@@ -1,5 +1,7 @@
 package pl.polsl.orphanage.domain;
 
+import org.hibernate.annotations.Type;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
@@ -12,7 +14,7 @@ public class Holiday implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", updatable = false, nullable = false)
     private Long id;
 
@@ -26,13 +28,13 @@ public class Holiday implements Serializable {
     @Temporal(TemporalType.DATE)
     private Date endDate;
 
-    @Column(name = "IsReturned")
-    private Boolean isReturned;
+    @Column(name = "IsReturned", columnDefinition = "BIT", length = 1)
+    private Short isReturned;
 
     @Column(name = "Notes")
     private String notes;
 
-    @JoinColumn(name = "Fosterling_Id", referencedColumnName = "Id", insertable = false, updatable = false)
+    @JoinColumn(name = "Fosterling_Id", referencedColumnName = "Id")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Fosterling fosterling;
 
@@ -73,11 +75,11 @@ public class Holiday implements Serializable {
         this.endDate = endDate;
     }
 
-    public Boolean getIsReturned() {
+    public Short getIsReturned() {
         return isReturned;
     }
 
-    public void setIsReturned(Boolean isReturned) {
+    public void setIsReturned(Short isReturned) {
         this.isReturned = isReturned;
     }
 
