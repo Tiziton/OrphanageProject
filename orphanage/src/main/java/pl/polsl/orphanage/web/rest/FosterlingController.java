@@ -135,6 +135,16 @@ public class FosterlingController {
     }
 
     /**
+     * GET /sibiling/{id} : get sibilings of fosterling
+     *
+     * @param id id of the fosterling
+     */
+    @GetMapping("/sibiling/{id}")
+    public List<FosterlingDTO> getSibilings(@PathVariable Long id){
+        return fosterlingService.findFosterlingSibilings(id);
+    }
+
+    /**
      * POST /sibiling/delete : delete sibiling from fosterling
      *
      * @param bodyRequest the body request
