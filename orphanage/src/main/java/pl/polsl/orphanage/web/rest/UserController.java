@@ -15,6 +15,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.EnumSet;
 import java.util.List;
+import pl.polsl.orphanage.web.rest.requestbody.UserRequestBody;
 
 /**
  * REST controller for managing User.
@@ -47,24 +48,22 @@ public class UserController {
      * @throws BadRequestAlertException 400 (Bad Request) if the login or email is already in use
      */
     @PostMapping("/user")
-    public ResponseEntity<UserDTO> createUser(@RequestBody String login,
-                                           @RequestBody String password,
-                                            @RequestBody List<String> roles) throws URISyntaxException {
+    public ResponseEntity<UserDTO> createUser(@RequestBody UserRequestBody bodyRequest) throws URISyntaxException {
 
-        if (userRepository.findByUsername(login.toLowerCase()).isPresent()) {
+        if (userRepository.findByUsername(bodyRequest.getLogin().toLowerCase()).isPresent()) {
             throw new LoginAlreadyUsedException();
         } else {
             UserDTO userDTO = new UserDTO();
-            userDTO.setUsername(login);
-            roles
-                    .stream()
-                    .filter(role -> contains(AuthoritiesConstants.class, role))
-                    .forEach(elem -> userDTO.getAuthorities().add(elem));
+            userDTO.setUsername(bodyRequest.getLogin());
+            bodyRequest.getRoles()
+              .stream()
+              .filter(role -> contains(AuthoritiesConstants.class, role))
+              .forEach(elem -> userDTO.getAuthorities().add(elem));
 
-            UserDTO newUser = userService.createUser(userDTO,password);
+            UserDTO newUser = userService.createUser(userDTO, bodyRequest.getPassword());
             return ResponseEntity.created(new URI("/api/users/" + newUser.getUsername()))
-                    .headers(HeaderUtil.createAlert( "userManagement.created", newUser.getUsername()))
-                    .body(newUser);
+              .headers(HeaderUtil.createAlert("userManagement.created", newUser.getUsername()))
+              .body(newUser);
         }
     }
 
