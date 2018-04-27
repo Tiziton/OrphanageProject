@@ -10,6 +10,10 @@ public class SibilingRequestBody {
         this.sibilingId = sibilingId;
     }
 
+    public SibilingRequestBody() {
+
+    }
+
     public Long getId() {
         return id;
     }
