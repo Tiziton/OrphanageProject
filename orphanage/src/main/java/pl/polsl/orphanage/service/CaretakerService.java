@@ -47,7 +47,7 @@ public class CaretakerService {
      * @return the list of entities
      */
     @Transactional(readOnly = true)
-    List<CaretakerDTO> findAll(){
+    public List<CaretakerDTO> findAll(){
         return caretakerRepository.findAll().stream()
                 .map(caretakerMapper::toDto)
                 .collect(Collectors.toCollection(LinkedList::new));

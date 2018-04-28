@@ -54,7 +54,7 @@ public class CaretakerController {
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
     @PutMapping("/caretaker")
-    public ResponseEntity<CaretakerDTO> updateCaretaker(@RequestBody CaretakerDTO caretakerDTO) throws URISyntaxException { ;
+    public ResponseEntity<CaretakerDTO> updateCaretaker(@RequestBody CaretakerDTO caretakerDTO) throws URISyntaxException {
         if (caretakerDTO.getId() == null) {
             return createCaretaker(caretakerDTO);
         }
@@ -73,6 +73,16 @@ public class CaretakerController {
     @GetMapping("/caretaker/{id}")
     public CaretakerDTO getCaretakerByUser(@PathVariable Long id) {
         return caretakerService.findCaretakerByUserId(id);
+    }
+    
+    /**
+     * GET  /caretaker/:id : get all caretakers.
+     *
+     * @return the ResponseEntity with status 200 (OK) and the list of caretakers in body
+     */
+    @GetMapping("/caretaker")
+    public List<CaretakerDTO> getAll() {
+        return caretakerService.findAll();
     }
 
     /**
