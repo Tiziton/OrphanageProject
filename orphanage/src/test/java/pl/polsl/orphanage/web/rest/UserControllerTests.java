@@ -8,6 +8,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import pl.polsl.orphanage.OrphanageApplication;
 import pl.polsl.orphanage.repository.UserRepository;
 import pl.polsl.orphanage.service.dto.UserDTO;
+import pl.polsl.orphanage.web.rest.requestbody.UserRequestBody;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,10 +41,10 @@ public class UserControllerTests {
         List<String> roles = new ArrayList<>();
         roles.add("CARETAKER");
         try{
-            userDTO =userController.createUser(
+            userDTO =userController.createUser(new UserRequestBody(
                     "user",
                     "user",
-                    roles
+                    roles)
             ).getBody();
         } catch(Exception e){
             Assert.assertTrue(false);
@@ -58,10 +59,10 @@ public class UserControllerTests {
         List<String> roles = new ArrayList<>();
         roles.add("CARETAKER");
         try{
-            userDTO =userController.createUser(
+            userDTO =userController.createUser(new UserRequestBody(
                     "user",
                     "user",
-                    roles
+                    roles)
             ).getBody();
         } catch(Exception e){
             Assert.assertTrue(false);
@@ -82,16 +83,16 @@ public class UserControllerTests {
         roles2.add("CARETAKER");
         roles2.add("ADMIN");
         try{
-            userController.createUser(
+            userController.createUser(new UserRequestBody(
                     "user",
                     "user",
-                    roles
+                    roles)
             ).getBody();
 
-            userController.createUser(
+            userController.createUser(new UserRequestBody(
                     "user2",
                     "user2",
-                    roles2
+                    roles2)
             ).getBody();
         } catch(Exception e){
             Assert.assertTrue(false);
@@ -107,10 +108,10 @@ public class UserControllerTests {
         List<String> roles = new ArrayList<>();
         roles.add("CARETAKER");
         try{
-            userDTO =userController.createUser(
+            userDTO =userController.createUser(new UserRequestBody(
                     "user",
                     "user",
-                    roles
+                    roles)
             ).getBody();
         } catch(Exception e){
             Assert.assertTrue(false);

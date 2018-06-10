@@ -11,6 +11,7 @@ import pl.polsl.orphanage.repository.CaretakerRepository;
 import pl.polsl.orphanage.repository.UserRepository;
 import pl.polsl.orphanage.service.dto.CaretakerDTO;
 import pl.polsl.orphanage.service.dto.UserDTO;
+import pl.polsl.orphanage.web.rest.requestbody.UserRequestBody;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -57,10 +58,10 @@ public class CaretakerControllerTests {
         CaretakerDTO caretakerDTO2 = new CaretakerDTO();
 
         try{
-            userDTO =userController.createUser(
+            userDTO =userController.createUser(new UserRequestBody(
                     "user",
                     "user",
-                    roles
+                    roles)
             ).getBody();
 
             caretakerDTO.setUserId(userDTO.getId());
@@ -96,10 +97,10 @@ public class CaretakerControllerTests {
         caretakerDTO.setLastname("Nowak");
 
         try{
-            userDTO =userController.createUser(
+            userDTO =userController.createUser(new UserRequestBody(
                     "user",
                     "user",
-                    roles
+                    roles)
             ).getBody();
 
             caretakerDTO.setUserId(userDTO.getId());
@@ -133,10 +134,10 @@ public class CaretakerControllerTests {
         caretakerDTO.setLastname("Nowak");
 
         try{
-            userDTO =userController.createUser(
+            userDTO =userController.createUser(new UserRequestBody(
                     "user",
                     "user",
-                    roles
+                    roles)
             ).getBody();
 
             caretakerDTO.setUserId(userDTO.getId());

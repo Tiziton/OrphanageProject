@@ -18,6 +18,7 @@ import pl.polsl.orphanage.service.dto.FosterlingDTO;
 import pl.polsl.orphanage.service.dto.RelativeDTO;
 import pl.polsl.orphanage.service.dto.UserDTO;
 import pl.polsl.orphanage.web.rest.requestbody.RelativeRequestBody;
+import pl.polsl.orphanage.web.rest.requestbody.UserRequestBody;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -70,10 +71,10 @@ public class RelativeControllerTests {
         fosterlingDTO.setLastname("Wojteaszek");
 
         try {
-            userDTO = userController.createUser(
+            userDTO = userController.createUser(new UserRequestBody(
                     "user",
                     "user",
-                    roles
+                    roles)
             ).getBody();
 
             caretakerDTO.setUserId(userDTO.getId());
