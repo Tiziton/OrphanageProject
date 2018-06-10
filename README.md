@@ -23,16 +23,31 @@ When want to use debugger, you must uncomment configuration section from pom.xml
 
 ### Production
 
-When you want create production file first change and 
+When you want to create production file first change and 
 
 ```
 spring.jpa.hibernate.ddl-auto = none
 ```
 
-Next run
+Next runs
 
 ```
 mvnw package
+```
+
+When wanna run server:
+
+```
+java -jar orphanage-1.0.war 
+--spring.datasource.url=jdbc:sqlserver://localhost;databaseName=databaseName
+--spring.datasource.username=username 
+--spring.datasource.password=password
+```
+
+When we wanna create a database, should be added one more parameter 
+
+```
+--spring.jpa.hibernate.ddl-auto=create 
 ```
 
 ### Build with
@@ -40,5 +55,3 @@ mvnw package
 * [Maven](https://maven.apache.org) - Dependency Management
 * [SpringFramework](https://projects.spring.io/spring-framework/) - Framework to build RestApi Application
 * [Hibernate](http://hibernate.org) - Tool to create ORM from database
-
-## Desktop App
