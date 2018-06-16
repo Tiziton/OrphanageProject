@@ -11,7 +11,12 @@ import pl.polsl.orphanage.web.rest.util.HeaderUtil;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.Date;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import static java.time.temporal.WeekFields.ISO;
 import java.util.List;
+import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  * REST controller for managing Holiday.
@@ -82,6 +87,42 @@ public class HolidayController {
         List<Holiday> list = holidayRepository.findByFosterlingId(fosterlingId);
         return new ResponseEntity<>(holidayMapper.toDto(list), HttpStatus.OK);
     }
+    
+    /**
+     * GET  /holidays/return/:returned : get all holidays returned or not returned
+     *
+     * @param returned signalise if fosterling returned
+     * @return the ResponseEntity with status 200 (OK) and the list of holidays in body
+     */
+    @GetMapping("/holidays/return/{returned}")
+    public ResponseEntity<List<HolidayDTO>> getReturnedHoliday(@PathVariable Boolean returned) {
+       short ret=(short)((returned==true)? 1:0);
+       List<Holiday> list = holidayRepository.findReturned(ret);
+        return new ResponseEntity<>(holidayMapper.toDto(list), HttpStatus.OK);
+    }
+    
+    
+    /**
+     * GET  /holidays/present?startDate=:startDate&endDate=:endDate : get all the holidays of fosterlings present in period from
+     * startDate to endDate date
+     *
+     * @param fosterlingId the id of the fosterling parent
+     * @return the ResponseEntity with status 200 (OK) and the list of holidays in body
+     */
+    @GetMapping("/holidays/present")
+    public ResponseEntity<List<HolidayDTO>> getDatesHoliday(
+            @RequestParam("startDate")   @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
+            @RequestParam("endDate")   @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate) {
+        
+        
+        Date from = Date.from(startDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
+        Date to = Date.from(endDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
+        
+        List<Holiday> list = holidayRepository.findPresent(from, to);
+        return new ResponseEntity<>(holidayMapper.toDto(list), HttpStatus.OK);
+        
+    }
+    
     
     /**
      * DELETE  /holidays/:id : delete the "id" holiday.
