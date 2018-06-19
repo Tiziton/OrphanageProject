@@ -8,6 +8,10 @@ public class RelativeRequestBody {
         this.id = id;
         this.sibilingId = sibilingId;
     }
+    
+    public RelativeRequestBody(){
+    
+    }
 
     public Long getId() {
         return id;
